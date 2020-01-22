@@ -15,17 +15,3 @@ email,testtesttesttesttest@gmail.com
 email,                   testtest@gmail.com
 email,						testtest@gmail.com
 email,testtest@gmail.c o m
-
-bio,<html>
-
-
-
-
-
-
-</html>
-
-
-
-
-email,test.com
