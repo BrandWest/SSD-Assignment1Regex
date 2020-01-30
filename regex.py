@@ -7,14 +7,15 @@ import csv
 
 # TODO Currently cant do inputs like: bio,bio,bio
 # TODO Check really large stuff
-def main(location):
+def main(fileLocation):
     yes = 0
     no = 0
+    oob = 0
     rules = ["student,", "password,", "username,", "email,", "previous,", "phone,", "postal,", "address,", "binary,",
              "bio,"]
     stringList = list()
     # csv parser
-    with open(location, "r") as data:
+    with open(fileLocation, "r") as data:
         for ruleCombo in data:
             for i in range(0, len(rules)):
                 if ',' in ruleCombo:
@@ -24,76 +25,117 @@ def main(location):
                     break
                 else:
                     ruleCombo.replace('\n', '')
-                    break
+
         # To check each of the functions that are to be called.
         for i in range(0, len(stringList)):
             if "student" in stringList[i]:
-                result = student(stringList[i + 1])
+                try:
+                    result = student(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
+
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
             elif "password" in stringList[i]:
-                result = password(stringList[i + 1])
+                try:
+                    result = password(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
-                
+
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "username" in stringList[i]:
-                result = username(stringList[i + 1])
+                try:
+                    result = username(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
-                
+
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "email" in stringList[i]:
-                result = email(stringList[i + 1])
+                try:
+                    result = email(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
+
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "previous" in stringList[i]:
-                result = previous(stringList[i + 1], stringList[i - 1])
+                try:
+                    result = previous(stringList[i + 1], stringList[i - 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
+
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "phone" in stringList[i]:
-                result = phone(stringList[i + 1])
+                try:
+                    result = phone(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "postal" in stringList[i]:
-                result = postal(stringList[i + 1])
+                try:
+                    result = postal(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "address" in stringList[i]:
-                result = address(stringList[i + 1])
+                try:
+                    result = address(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "binary" in stringList[i]:
-                result = binary(stringList[i + 1])
+                try:
+                    result = binary(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
                 if result == 0:
                     yes = yes + 1
                 else:
                     no = no + 1
+
             elif "bio" in stringList[i]:
-                result = bio(stringList[i + 1])
+                try:
+                    result = bio(stringList[i + 1])
+                except IndexError as error:
+                    oob = oob + 1
                 i = i + 1
                 if result == 0:
                     yes = yes + 1
@@ -105,7 +147,6 @@ def main(location):
         t = Texttable()
         t.add_rows([["Category", "Totals"], ['Yes', yes], ['No', no]])
         print(t.draw())
-
 
 # This can be used to verify the strings that are being shown as "right"
 # print ( re.search("[a-zA-Z0-9]{3,20}@[a-zA-Z]+\\.(ca|com|org|gov|net|int|edu)$", regex) )
@@ -217,11 +258,12 @@ def bio(string):
 
 
 if __name__ == "__main__":
+    print("Welcome to the......")
     custom_font = Figlet(font='jazmine')
     print(custom_font.renderText("Regex Machine"))
-
     location = input("Enter the file location (/path/to/file) or 1 for default: ")
-    if location == 1:
+    # Location = '1'
+    if location == '1':
         location = '/home/caboose/Desktop/ssd/assignment1Regex/sampleFile.csv'
         main(location)
     else:
